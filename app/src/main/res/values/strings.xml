@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">QR Scanner</string>
+    <string-array name="android_version">
+        <item>
+            Lollipop
+        </item>
+        <item>
+            Oreo
+        </item>
+    </string-array>
+    <string name="nav_draw_open">
+        Open Navigation Draw
+    </string>
+
+    <string name="nav_draw_close">
+        Close Navigation Draw
+    </string>
+    <string name="UserName">Enter UserName</string>
+    <string name="TeacherMyLectures">My Lectures</string>
+    <string name="TeacherAddLecture">Add Lectures</string>
+    <string name="TeacherPastLectures">Past Lectures</string>
+    <string name="Settings">Settings</string>
+    <string name="ScanCode">Scan Code</string>
+    <string name="History">History</string>
+    <string name="MyClasses">My Classes</string>
+</resources>

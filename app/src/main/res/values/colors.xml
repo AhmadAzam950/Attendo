@@ -1,0 +1,8 @@
+<resources>
+    <color name="colorPrimary">#519321</color>
+    <color name="colorPrimaryDark">#f1f0ec</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="fab">
+        #519321
+    </color>
+</resources>
