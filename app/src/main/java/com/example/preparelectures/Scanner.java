@@ -1,5 +1,4 @@
 package com.example.preparelectures;
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.Manifest;
@@ -19,13 +18,13 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 
-
 public class Scanner extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private CodeScanner mCodeScanner;
     private SeekBar seekBar;
     private int maxZoom = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,14 +41,14 @@ public class Scanner extends AppCompatActivity {
         CameraManager cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
 
         try {
-            maxZoom = cameraManager.getCameraCharacteristics(String.valueOf(CodeScanner.CAMERA_BACK+2))
-                    .get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM).intValue()*10;
+            maxZoom = cameraManager.getCameraCharacteristics(String.valueOf(CodeScanner.CAMERA_BACK + 2))
+                    .get(CameraCharacteristics.SCALER_AVAILABLE_MAX_DIGITAL_ZOOM).intValue() * 10;
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
 
 
-        seekBar=(SeekBar) findViewById(R.id.seekBar);
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
         seekBar.setMax(maxZoom);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -120,7 +119,6 @@ public class Scanner extends AppCompatActivity {
             // Permission has already been granted
         }
     }
-
 
     @Override
     protected void onResume() {

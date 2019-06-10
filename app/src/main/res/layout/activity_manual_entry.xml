@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".ManualEntry"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp">
-
         <Button
             android:id="@+id/select"
             android:layout_width="100dp"
@@ -19,12 +20,13 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
 
-            android:background="@color/colorPrimary"
+            android:background="@color/colorAccent"
             android:text="Select All"
             android:textColor="@android:color/background_light"
             android:textColorHighlight="@android:color/background_light"
             android:textColorLink="@android:color/background_light" />
     </RelativeLayout>
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

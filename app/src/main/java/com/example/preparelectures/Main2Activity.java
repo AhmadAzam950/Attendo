@@ -16,7 +16,6 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,7 +29,7 @@ import com.google.gson.Gson;
 
 import javax.annotation.Nullable;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected DrawerLayout draw;
     private FirebaseAuth firebaseAuth;
     private Toolbar toolbar;
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DocumentReference userProfile;
     private String uid;
     private SharedPreferences sharedPreferences;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (documentSnapshot.exists()) {
                         studentProfile studentProfile = documentSnapshot.toObject(studentProfile.class);
                         getSupportActionBar().setTitle(studentProfile.getRollNo());
-                        sharedPreferences=getSharedPreferences("Yo",MODE_PRIVATE);
+                        sharedPreferences=getPreferences(MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         String json=new Gson().toJson(studentProfile);
                         editor.putString("profile",json);
@@ -84,12 +82,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,
-                    new studenthomeSegment()).commit();
+                    new homeSegment()).commit();
             navigationView.setCheckedItem(R.id.home);
         }
 
     }
-
     void linkObjects() {
         navigationView = findViewById(R.id.nav_view);
         draw = findViewById(R.id.draw_layout);
@@ -113,19 +110,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,
-                        new studenthomeSegment()).commit();
+                        new homeSegment()).commit();
                 break;
             case R.id.logout:
-                if(sharedPreferences.getString("profile","")!="") {
-                    sharedPreferences.edit().remove("profile").commit();
-                    if (sharedPreferences.getString("profile", "") == "") {
-                        Toast.makeText(this, "profile", Toast.LENGTH_LONG).show();
-                        firebaseAuth.signOut();
-                        Intent I = new Intent(this, Login_Page.class);
-                        startActivity(I);
-                        finish();
-                    }
-                }
+                firebaseAuth.signOut();
+                sharedPreferences.edit().remove("teacherProfile");
+                Intent I = new Intent(this, Login_Page.class);
+                finish();
+                startActivity(I);
                 break;
         }
         draw.closeDrawer(GravityCompat.START);

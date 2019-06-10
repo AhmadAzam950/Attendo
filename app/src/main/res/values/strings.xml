@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QR Scanner</string>
+    <string name="app_name">Attendo</string>
     <string-array name="android_version">
         <item>
             Lollipop
@@ -8,10 +8,18 @@
             Oreo
         </item>
     </string-array>
+    <string-array name="sync_type">
+    <item>
+        WiFi
+    </item>
+        <item>
+        Data
+    </item>
+    </string-array>
     <string name="nav_draw_open">
         Open Navigation Draw
     </string>
-
+    <string name="wifi">WiFi</string>
     <string name="nav_draw_close">
         Close Navigation Draw
     </string>
@@ -23,4 +31,7 @@
     <string name="ScanCode">Scan Code</string>
     <string name="History">History</string>
     <string name="MyClasses">My Classes</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

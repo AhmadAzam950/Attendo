@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.preparelectures">
-    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -10,15 +12,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Scanner"></activity>
-        <activity android:name=".Login_Page" />
+        <activity android:name=".Main2Activity"
+            android:theme="@style/noActionbar"></activity>
+        <activity android:name=".Scanner" />
+        <activity android:name=".TeacherMain"
+            android:theme="@style/noActionbar"></activity>
+        <activity
+            android:name=".Login_Page"
+            android:noHistory="true" />
         <activity android:name=".ManualEntry" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SplashActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/noActionbar" />
+        <activity
+            android:name=".SplashActivity"
+            android:noHistory="true"
+            android:theme="@style/noActionbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

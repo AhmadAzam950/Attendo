@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "268251035855",
+    "firebase_url": "https://attendo-123.firebaseio.com",
+    "project_id": "attendo-123",
+    "storage_bucket": "attendo-123.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268251035855:android:4ba4ab8b535146d0",
+        "android_client_info": {
+          "package_name": "com.example.preparelectures"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "268251035855-9a74lod999guj4t6cfu1lvguspo2e7k2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSq8JqKBOfkcdjhw_bYkRroGbjDvpJMgg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "268251035855-9a74lod999guj4t6cfu1lvguspo2e7k2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

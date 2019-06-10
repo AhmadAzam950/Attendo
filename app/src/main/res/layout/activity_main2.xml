@@ -30,10 +30,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:titleMarginBottom="10dp" />
 
-<FrameLayout
-    android:id="@+id/frameLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"></FrameLayout>
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

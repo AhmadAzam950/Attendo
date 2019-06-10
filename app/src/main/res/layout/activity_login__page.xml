@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
+    android:theme="@style/AppTheme"
     tools:context="com.example.preparelectures.Login_Page">
 
     <ImageView
