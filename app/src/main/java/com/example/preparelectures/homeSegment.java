@@ -13,6 +13,8 @@ import android.widget.Button;
 public class homeSegment extends Fragment {
     private Button btn;
     private Button btn1;
+    private Button btn3;
+
 
     @Nullable
     @Override
@@ -27,6 +29,7 @@ public class homeSegment extends Fragment {
     void linkObjects(View view) {
         btn = (Button) view.findViewById(R.id.btn);
         btn1 = view.findViewById(R.id.bt1n);
+        btn3 = view.findViewById(R.id.btn3);
 
     }
 
@@ -41,6 +44,12 @@ public class homeSegment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), Scanner.class));
+            }
+        });
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), Main2Activity.class));
             }
         });
     }

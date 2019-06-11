@@ -2,6 +2,7 @@ package com.example.preparelectures;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,111 +28,39 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.auth.User;
 import com.google.gson.Gson;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import javax.annotation.Nullable;
 
-public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    protected DrawerLayout draw;
-    private FirebaseAuth firebaseAuth;
-    private Toolbar toolbar;
-    private NavigationView navigationView;
-    private FirebaseFirestore db=FirebaseFirestore.getInstance();
-    private DocumentReference userProfile;
-    private String uid;
-    private SharedPreferences sharedPreferences;
+public class Main2Activity extends AppCompatActivity {
+    private ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         linkObjects();
-        PreferenceManager.setDefaultValues(this,R.xml.settings,false);
-        firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user=firebaseAuth.getCurrentUser();
-        if (firebaseAuth.getCurrentUser() == null) {
-            Intent I = new Intent(this, Login_Page.class);
-            finish();
-            startActivity(I);
+        MultiFormatWriter multiFormatWriter=new MultiFormatWriter();
+        try{
+            BitMatrix bitMatrix=multiFormatWriter.encode("Hello", BarcodeFormat.QR_CODE,500,500);
+            BarcodeEncoder barcodeEncoder=new BarcodeEncoder();
+            Bitmap bitmap=barcodeEncoder.createBitmap(bitMatrix);
+            img.setImageBitmap(bitmap);
         }
-        uid=user.getUid();
-        userProfile=db.collection("students").document(uid);
-        userProfile.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                if(e==null) {
-                    if (documentSnapshot.exists()) {
-                        studentProfile studentProfile = documentSnapshot.toObject(studentProfile.class);
-                        getSupportActionBar().setTitle(studentProfile.getRollNo());
-                        sharedPreferences=getPreferences(MODE_PRIVATE);
-                        SharedPreferences.Editor editor=sharedPreferences.edit();
-                        String json=new Gson().toJson(studentProfile);
-                        editor.putString("profile",json);
-                        editor.commit();
-                    }
-                }
-                else
-                {
-
-                }
-
-            }
-        });
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, draw, toolbar, R.string.nav_draw_open, R.string.nav_draw_close);
-        draw.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,
-                    new homeSegment()).commit();
-            navigationView.setCheckedItem(R.id.home);
+        catch (WriterException e)
+        {
+            e.printStackTrace();
         }
 
     }
+
     void linkObjects() {
-        navigationView = findViewById(R.id.nav_view);
-        draw = findViewById(R.id.draw_layout);
-        toolbar = findViewById(R.id.toolbar);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,
-                        new profieSegment()).commit();
-                break;
-            case R.id.lecture:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,
-                        new lectureSegment()).commit();
-                break;
-            case R.id.settings:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,
-                        new preference()).commit();
-                break;
-            case R.id.home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,
-                        new homeSegment()).commit();
-                break;
-            case R.id.logout:
-                firebaseAuth.signOut();
-                sharedPreferences.edit().remove("teacherProfile");
-                Intent I = new Intent(this, Login_Page.class);
-                finish();
-                startActivity(I);
-                break;
-        }
-        draw.closeDrawer(GravityCompat.START);
-        return true;
+        img = findViewById(R.id.imageQr);
 
     }
 
-    @Override
-    public void onBackPressed() {
-        if (draw.isDrawerOpen(GravityCompat.START)) {
-            draw.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 }

@@ -9,16 +9,25 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-public class Adaptor extends RecyclerView.Adapter<Adaptor.MyViewHolder> {
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+public class Adaptor extends FirestoreRecyclerAdapter<studentProfile,Adaptor.MyViewHolder> {
     String[] names;
     String[] roll;
     boolean[] check;
 
-    public Adaptor(String[] names, String[] rolls, boolean[] check) {
-        this.names = names;
-        this.check = check;
-        this.roll = rolls;
+    /**
+     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
+     * FirestoreRecyclerOptions} for configuration options.
+     *
+     * @param options
+     */
+    public Adaptor(@NonNull FirestoreRecyclerOptions<studentProfile> options) {
+        super(options);
     }
+
 
     @NonNull
     @Override
@@ -26,22 +35,56 @@ public class Adaptor extends RecyclerView.Adapter<Adaptor.MyViewHolder> {
         View txt = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.customlayout, viewGroup, false);
         MyViewHolder viewHolder = new MyViewHolder(txt);
         return viewHolder;
+
+    }
+    void updateItemTrue()
+    {
+        for(int  i=0;i<getItemCount();i++)
+        {
+            getSnapshots().getSnapshot(i).getReference().update("check",true);
+        }
+    }
+    void updateItemFalse()
+    {
+        for(int  i=0;i<getItemCount();i++)
+        {
+            getSnapshots().getSnapshot(i).getReference().update("check",false);
+        }
+    }
+    int getItemCountt()
+    {
+        return getItemCount();
     }
 
-    @Override
+    /*@NonNull
+        @Override
+        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            View txt = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.customlayout, viewGroup, false);
+            MyViewHolder viewHolder = new MyViewHolder(txt);
+            return viewHolder;
+        }
+    */
+   /* @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
         viewHolder.txt.setText(names[i]);
         viewHolder.txt2.setText(roll[i]);
         viewHolder.checkBox.setChecked(check[i]);
 
     }
-
-    @Override
+*/
+    /*@Override
     public int getItemCount() {
         return names.length;
     }
+*/
+    @Override
+    protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull studentProfile model) {
+        holder.checkBox.setChecked(model.isCheck());
+        holder.txt.setText(model.getFirstName()+" "+model.getLastName());
+        holder.txt2.setText(model.getRollNo());
+    }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public  class MyViewHolder extends RecyclerView.ViewHolder {
         TextView txt;
         TextView txt2;
         CheckBox checkBox;
@@ -52,6 +95,21 @@ public class Adaptor extends RecyclerView.Adapter<Adaptor.MyViewHolder> {
             txt = (TextView) itemView.findViewById(R.id.name);
             txt2 = (TextView) itemView.findViewById(R.id.rollno);
             checkBox = (CheckBox) itemView.findViewById(R.id.check);
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int positon=getAdapterPosition();
+                    studentProfile s=getSnapshots().getSnapshot(positon).toObject(studentProfile.class);
+                    if(s.isCheck())
+                    {
+                        getSnapshots().getSnapshot(positon).getReference().update("check",false);
+                    }
+                    else
+                    {
+                        getSnapshots().getSnapshot(positon).getReference().update("check",true);
+                    }
+                }
+            });
 
         }
     }

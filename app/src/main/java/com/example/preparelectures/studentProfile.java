@@ -4,6 +4,7 @@ public class studentProfile {
     private String firstName;
     private String lastName;
     private String rollNo;
+    private boolean check=false;
     public studentProfile()
     {
 
@@ -33,9 +34,18 @@ public class studentProfile {
         this.firstName = firstName;
     }
 
-    public studentProfile(String firstName, String lastName, String rollNo) {
+    public studentProfile(String firstName, String lastName, String rollNo, boolean check) {
         this.firstName = firstName;
         this.lastName=lastName;
         this.rollNo=rollNo;
+        this.check = check;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
     }
 }

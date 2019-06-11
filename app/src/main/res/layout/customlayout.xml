@@ -28,7 +28,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:text="BSef16a029"
-                android:textSize="25sp"
+                android:textSize="19sp"
 
                 android:textStyle="bold" />
 
@@ -39,8 +39,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/rollno"
+                android:layout_toLeftOf="@+id/check"
                 android:text="Ahmad"
-                android:textSize="23sp" />
+                android:textSize="17sp" />
 
             <CheckBox
                 android:id="@+id/check"

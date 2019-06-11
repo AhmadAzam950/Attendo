@@ -18,6 +18,7 @@ public class profieSegment extends Fragment
 {
     private TextView name;
     private TextView rollNo;
+    private TextView check;
     private SharedPreferences sharedPreferences;
     private studentProfile profile;
     @Nullable
@@ -30,10 +31,13 @@ public class profieSegment extends Fragment
         profile=new Gson().fromJson(json,studentProfile.class);
         name.setText(profile.getFirstName()+" "+ profile.getLastName());
         rollNo.setText(profile.getRollNo());
+        check.setText(Boolean.toString(profile.isCheck()));
         return view;
     }
     void linkObjects(View view) {
         name = (TextView) view.findViewById(R.id.profile_name);
         rollNo = view.findViewById(R.id.profile_rollno);
+        check= view.findViewById(R.id.checkNext);
+
     }
 }
