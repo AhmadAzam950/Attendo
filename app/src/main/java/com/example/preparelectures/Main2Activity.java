@@ -38,21 +38,24 @@ import javax.annotation.Nullable;
 
 public class Main2Activity extends AppCompatActivity {
     private ImageView img;
+    private String lectureId;
+    private String classId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         linkObjects();
-        MultiFormatWriter multiFormatWriter=new MultiFormatWriter();
-        try{
-            BitMatrix bitMatrix=multiFormatWriter.encode("Hello", BarcodeFormat.QR_CODE,500,500);
-            BarcodeEncoder barcodeEncoder=new BarcodeEncoder();
-            Bitmap bitmap=barcodeEncoder.createBitmap(bitMatrix);
+        Intent intent = getIntent();
+        lectureId = intent.getStringExtra("lectureId");
+        classId = intent.getStringExtra("classId");
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(lectureId + "," + classId, BarcodeFormat.QR_CODE, 500, 500);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             img.setImageBitmap(bitmap);
-        }
-        catch (WriterException e)
-        {
+        } catch (WriterException e) {
             e.printStackTrace();
         }
 

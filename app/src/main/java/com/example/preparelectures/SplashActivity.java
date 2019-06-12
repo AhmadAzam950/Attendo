@@ -18,8 +18,6 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(SplashActivity.this, getSharedPreferences("Yo",0).getString("teacherProfile","")+
-                        getSharedPreferences("Yo",0).getString("profile",""), Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(SplashActivity.this,Login_Page.class);
                 startActivity(intent);
                 finish();

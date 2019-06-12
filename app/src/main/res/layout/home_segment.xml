@@ -10,11 +10,10 @@
         android:id="@+id/imageView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="84dp"
         android:src="@drawable/ic_school_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -23,31 +22,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="75dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="96dp"
         android:background="@drawable/edit_roundbtn"
         android:padding="10dp"
         android:text="Manual Entry"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bt1n" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/bt1n"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="28dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/edit_roundbtn"
         android:padding="10dp"
         android:text="Scan Student Code"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn3" />
+        app:layout_constraintBottom_toTopOf="@+id/btn"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/btn3"
@@ -55,14 +53,25 @@
 
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="48dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/edit_roundbtn"
         android:padding="10dp"
         android:text="Generate Qr Code"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintBottom_toTopOf="@+id/bt1n"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/ic_done_black_24dp"
+        app:backgroundTint="@color/fab"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

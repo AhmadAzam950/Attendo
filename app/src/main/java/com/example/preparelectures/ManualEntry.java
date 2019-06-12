@@ -1,5 +1,6 @@
 package com.example.preparelectures;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -33,11 +34,17 @@ public class ManualEntry extends AppCompatActivity {
     private RecyclerView.LayoutManager layout;
     private FirebaseFirestore db;
     private SharedPreferences preferences;
+    private String lectureId;
+    private String classId;
 private Button btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_entry);
+
+        Intent intent=getIntent();
+        lectureId=intent.getStringExtra("lectureId");
+        classId=intent.getStringExtra("classId");
         db = FirebaseFirestore.getInstance();
         setUpRecyclerView();
         preferences=getSharedPreferences("Yo",MODE_PRIVATE);
@@ -68,7 +75,8 @@ private Button btn;
         recycle_view.setHasFixedSize(true);
         layout = new LinearLayoutManager(this);
         recycle_view.setLayoutManager(layout);
-        Query q = db.collection("students").orderBy("rollNo", Query.Direction.ASCENDING);
+        Query q = db.collection("tempdata").document(lectureId+classId)
+                .collection("studentsstate").orderBy("rollNo", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<studentProfile> options = new FirestoreRecyclerOptions.Builder<studentProfile>()
                 .setQuery(q, studentProfile.class)
                 .build();

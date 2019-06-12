@@ -12,15 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Main2Activity"
-            ></activity>
+        <activity android:name=".homeActivity"></activity>
+        <activity android:name=".Main2Activity" />
+        <activity android:name=".lecturesActivity"/>
         <activity android:name=".Scanner" />
-        <activity android:name=".TeacherMain"
-            android:theme="@style/noActionbar"></activity>
+        <activity
+            android:name=".TeacherMain"
+            android:theme="@style/noActionbar" />
         <activity
             android:name=".Login_Page"
             android:noHistory="true" />
-        <activity android:name=".ManualEntry" android:launchMode="singleTop"  android:parentActivityName=".TeacherMain" />
+        <activity
+            android:name=".ManualEntry"
+            android:launchMode="singleTop"
+            android:parentActivityName=".TeacherMain" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/noActionbar" />

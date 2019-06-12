@@ -1,4 +1,5 @@
 package com.example.preparelectures;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.Manifest;
@@ -13,9 +14,12 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;
+
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.Result;
 
 public class Scanner extends AppCompatActivity {
@@ -23,13 +27,14 @@ public class Scanner extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private CodeScanner mCodeScanner;
     private SeekBar seekBar;
+    FirebaseFirestore db;
     private int maxZoom = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
-
+        db = FirebaseFirestore.getInstance();
         requestCameraPermission();
 
         setUpCodeScanner();
@@ -79,6 +84,11 @@ public class Scanner extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(Scanner.this, result.getText(), Toast.LENGTH_SHORT).show();
+                        String array[]=result.getText().split(",",2);
+                        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+                        db.collection("tempdata").document(array[0]+array[1])
+                                .collection("studentsstate").document(firebaseAuth.getCurrentUser().getUid()).
+                                update("check",true);
                         mCodeScanner.startPreview();
                     }
                 });

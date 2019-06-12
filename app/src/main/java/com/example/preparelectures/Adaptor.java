@@ -11,13 +11,19 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
 
 public class Adaptor extends FirestoreRecyclerAdapter<studentProfile,Adaptor.MyViewHolder> {
     String[] names;
     String[] roll;
     boolean[] check;
-
+    FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
+    HashMap<String,Object> map=new HashMap<>();
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
@@ -26,6 +32,8 @@ public class Adaptor extends FirestoreRecyclerAdapter<studentProfile,Adaptor.MyV
      */
     public Adaptor(@NonNull FirestoreRecyclerOptions<studentProfile> options) {
         super(options);
+
+
     }
 
 

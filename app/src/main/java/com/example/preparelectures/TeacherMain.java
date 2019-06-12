@@ -79,7 +79,7 @@ public class TeacherMain extends AppCompatActivity implements NavigationView.OnN
         navigationView.setNavigationItemSelectedListener(this);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,
-                    new homeSegment()).commit();
+                    new homeCoursesSegment()).commit();
             navigationView.setCheckedItem(R.id.home);
         }
 
@@ -108,7 +108,7 @@ public class TeacherMain extends AppCompatActivity implements NavigationView.OnN
                 break;
             case R.id.home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,
-                        new homeSegment()).commit();
+                        new homeCoursesSegment()).commit();
                 break;
             case R.id.logout:
                 sharedPreferences.edit().remove("teacherProfile").commit();
