@@ -12,6 +12,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,7 +59,10 @@ public class TeacherMain extends AppCompatActivity implements NavigationView.OnN
                 if(e==null) {
                     if (documentSnapshot.exists()) {
                         teacherProfile studentProfile = documentSnapshot.toObject(teacherProfile.class);
-                        getSupportActionBar().setTitle(studentProfile.getQualification());
+                        getSupportActionBar().setTitle("Teacher Home");
+                        View v=findViewById(R.id.nav_view);
+                        TextView textView=v.findViewById(R.id.titleName);
+                        textView.setText(studentProfile.getFirstName());
                         sharedPreferences=getSharedPreferences("Yo",MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         String json=new Gson().toJson(studentProfile);

@@ -1,5 +1,6 @@
 package com.example.preparelectures;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.Manifest;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.Result;
@@ -84,11 +87,19 @@ public class Scanner extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast.makeText(Scanner.this, result.getText(), Toast.LENGTH_SHORT).show();
-                        String array[]=result.getText().split(",",2);
-                        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-                        db.collection("tempdata").document(array[0]+array[1])
+                        String array[] = result.getText().split(",", 2);
+                        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                        db.collection("tempdata").document(array[0] + array[1])
                                 .collection("studentsstate").document(firebaseAuth.getCurrentUser().getUid()).
-                                update("check",true);
+                                update("check", true).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(Scanner.this, "Attendance Marked", Toast.LENGTH_SHORT).show();
+                                    onBackPressed();
+                                }
+                            }
+                        });
                         mCodeScanner.startPreview();
                     }
                 });
@@ -134,6 +145,12 @@ public class Scanner extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mCodeScanner.startPreview();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override

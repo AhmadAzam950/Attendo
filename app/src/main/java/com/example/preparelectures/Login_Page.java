@@ -1,6 +1,9 @@
 package com.example.preparelectures;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -49,33 +52,21 @@ public class Login_Page extends AppCompatActivity {
             String x=sharedPreferences.getString("profile", "");
 
             if (t != "") {
-                Toast.makeText(getApplicationContext(), "TeacherLogin", Toast.LENGTH_LONG).show();
                 Intent I = new Intent(Login_Page.this, TeacherMain.class);
                 startActivity(I);
                 finish();
 
             } else if (x != "") {
-                Toast.makeText(getApplicationContext(), "studentLogin", Toast.LENGTH_LONG).show();
                 Intent I = new Intent(Login_Page.this, MainActivity.class);
                 startActivity(I);
                 finish();
             }
             else
             {
-                Toast.makeText(getApplicationContext(), "studentLoginn", Toast.LENGTH_LONG).show();
 
             }
         } else {
 
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    userLogin();
-              /*  Intent I = new Intent(Login_Page.this, MainActivity.class);
-                startActivity(I);
-            */
-                }
-            });
         }
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,13 +109,11 @@ public class Login_Page extends AppCompatActivity {
                         public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                             if (e == null) {
                                 if (documentSnapshot.exists()) {
-                                    Toast.makeText(getApplicationContext(), "Student", Toast.LENGTH_LONG).show();
                                     Intent I = new Intent(Login_Page.this, MainActivity.class);
                                     startActivity(I);
                                     finish();
 
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "Teacher", Toast.LENGTH_LONG).show();
                                     Intent I = new Intent(Login_Page.this, TeacherMain.class);
                                     startActivity(I);
                                     progressDialog.dismiss();
@@ -137,7 +126,6 @@ public class Login_Page extends AppCompatActivity {
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
-
                 }
             }
         });

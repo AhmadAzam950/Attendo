@@ -1,5 +1,6 @@
 package com.example.preparelectures;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class lecturesActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private Button btn;
     private String classId;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,9 @@ public class lecturesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         classId = intent.getStringExtra("classId");
         //getActionBar().setTitle(courseId);
-        getSupportActionBar().setTitle(classId);
+        getSupportActionBar().setTitle("Attendance");
         db = FirebaseFirestore.getInstance();
+        progressDialog=new ProgressDialog(this);
         setUpRecyclerView();
 
     }
@@ -71,6 +74,8 @@ public class lecturesActivity extends AppCompatActivity {
                 /*FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction().
                         replace(R.id.frameLayout,new homeSegment());
                 fragmentTransaction.commit();*/
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
                 final Intent intent = new Intent(getApplicationContext(), homeActivity.class);
                 final String lectureId = adaptor.getItemValue(viewHolder.getAdapterPosition());
                 intent.putExtra("lectureId", adaptor.getItemValue(viewHolder.getAdapterPosition()));
@@ -97,6 +102,7 @@ public class lecturesActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
+                                    progressDialog.dismiss();
                                     startActivity(intent);
                                 }
                             }

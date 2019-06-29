@@ -1,5 +1,4 @@
 package com.example.preparelectures;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -62,7 +61,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if(e==null) {
                     if (documentSnapshot.exists()) {
                         studentProfile studentProfile = documentSnapshot.toObject(studentProfile.class);
-                        getSupportActionBar().setTitle(studentProfile.getRollNo());
+                        studentProfile.setUid(uid);
+
+                        getSupportActionBar().setTitle("Student Home");
                         sharedPreferences=getSharedPreferences("Yo",MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         String json=new Gson().toJson(studentProfile);
@@ -132,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
 
     }
-
     @Override
     public void onBackPressed() {
         if (draw.isDrawerOpen(GravityCompat.START)) {

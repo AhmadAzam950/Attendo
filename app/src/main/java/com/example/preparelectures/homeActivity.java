@@ -1,5 +1,6 @@
 package com.example.preparelectures;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -27,6 +28,7 @@ public class homeActivity extends AppCompatActivity {
     private String classId;
     private String lectureId;
     private FloatingActionButton floatingActionButton;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +37,7 @@ public class homeActivity extends AppCompatActivity {
         Intent intent=getIntent();
         lectureId=intent.getStringExtra("lectureId");
         classId=intent.getStringExtra("classId");
-        getSupportActionBar().setTitle(classId+lectureId);
+        getSupportActionBar().setTitle("Attendance Module");
         linkObjects();
         attachListener();
     }
@@ -44,6 +46,7 @@ public class homeActivity extends AppCompatActivity {
         btn1 = findViewById(R.id.bt1n);
         btn3 = findViewById(R.id.btn3);
         floatingActionButton=findViewById(R.id.submitButton);
+        progressDialog=new ProgressDialog(this);
     }
 
     public void attachListener() {
@@ -75,6 +78,8 @@ public class homeActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.setMessage("Marking for you ;)");
+                progressDialog.show();
                 final ArrayList<studentProfile> list = new ArrayList<studentProfile>();
                 CollectionReference studentCollection = db.collection("tempdata").document(lectureId+classId).
                         collection("studentsstate");
@@ -105,6 +110,7 @@ public class homeActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful())
                                             {
+                                                progressDialog.dismiss();
                                                 finish();
                                                 startActivity(new Intent(getApplicationContext(),TeacherMain.class));
                                             }
