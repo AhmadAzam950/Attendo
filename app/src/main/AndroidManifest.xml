@@ -12,22 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".homeActivity"></activity>
-        <activity android:name=".Main2Activity" />
-        <activity android:name=".lecturesActivity"/>
+        <activity android:name=".AttendanceModuleHomeActivity"></activity>
+        <activity android:name=".BarCodeGenerateActivity" />
+        <activity android:name=".TeacherLecturesActivity"/>
         <activity android:name=".Scanner" />
         <activity
-            android:name=".TeacherMain"
+            android:name=".TeacherFirstActivity"
             android:theme="@style/noActionbar" />
         <activity
-            android:name=".Login_Page"
+            android:name=".Login_Page_Activity"
             android:noHistory="true" />
         <activity
             android:name=".ManualEntry"
             android:launchMode="singleTop"
-            android:parentActivityName=".TeacherMain" />
+            android:parentActivityName=".AttendanceModuleHomeActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".StudentFirstActivity"
             android:theme="@style/noActionbar" />
         <activity
             android:name=".SplashActivity"

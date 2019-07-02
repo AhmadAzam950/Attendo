@@ -1,10 +1,10 @@
 package com.example.preparelectures;
 
-public class teacherProfile {
+public class TeachersProfile {
     private String firstName;
     private String lastName;
     private String qualification;
-    public teacherProfile()
+    public TeachersProfile()
     {
 
     }
@@ -35,7 +35,7 @@ public class teacherProfile {
         this.firstName = firstName;
     }
 
-    public teacherProfile(String firstName, String lastName, String qualification) {
+    public TeachersProfile(String firstName, String lastName, String qualification) {
         this.firstName = firstName;
         this.lastName=lastName;
         this.qualification=qualification;

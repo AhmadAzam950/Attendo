@@ -8,7 +8,7 @@
     android:background="@color/colorPrimaryDark"
     tools:openDrawer="end"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context=".StudentFirstActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,6 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:titleMarginBottom="10dp" />
+
 
 <FrameLayout
     android:id="@+id/frameLayout"

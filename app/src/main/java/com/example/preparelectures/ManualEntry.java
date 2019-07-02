@@ -2,22 +2,12 @@ package com.example.preparelectures;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,9 +15,6 @@ import com.google.firebase.firestore.Query;
 
 public class ManualEntry extends AppCompatActivity {
 
-    public boolean[] check = {false, false, false, false, false, false, false, false, false, false, false, false};
-    public String[] names = {"Ahmad", "Usman", "Hussain", "Mukarram", "Ehsan", "Ali", "Ahmad", "Usman", "Hussain", "Mukarram", "Ehsan", "Ali"};
-    public String[] rollNo = {"Bsef16a029", "Bsef16a041", "Bsef16a009", "Bsef16a045", "Bsef16a036", "Bsef16a023", "Bsef16a029", "Bsef16a041", "Bsef16a009", "Bsef16a045", "Bsef16a036", "Bsef16a023"};
     public boolean flag = true;
     private RecyclerView recycle_view;
     private Adaptor adaptor;
@@ -47,7 +34,7 @@ private Button btn;
         classId=intent.getStringExtra("classId");
         db = FirebaseFirestore.getInstance();
         setUpRecyclerView();
-        preferences=getSharedPreferences("Yo",MODE_PRIVATE);
+        preferences=getSharedPreferences("MyFile",MODE_PRIVATE);
         btn = findViewById(R.id.select);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +51,6 @@ private Button btn;
                     btn.setText("Select All");
 
                 }
-                //adaptor.notifyDataSetChanged();
             }
         });
 
@@ -77,8 +63,8 @@ private Button btn;
         recycle_view.setLayoutManager(layout);
         Query q = db.collection("tempdata").document(lectureId+classId)
                 .collection("studentsstate").orderBy("rollNo", Query.Direction.ASCENDING);
-        FirestoreRecyclerOptions<studentProfile> options = new FirestoreRecyclerOptions.Builder<studentProfile>()
-                .setQuery(q, studentProfile.class)
+        FirestoreRecyclerOptions<StudentsProfile> options = new FirestoreRecyclerOptions.Builder<StudentsProfile>()
+                .setQuery(q, StudentsProfile.class)
                 .build();
         adaptor = new Adaptor(options);
         recycle_view.setAdapter(adaptor);

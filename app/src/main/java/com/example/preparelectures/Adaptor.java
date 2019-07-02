@@ -1,7 +1,6 @@
 package com.example.preparelectures;
 
 import android.support.annotation.NonNull;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +10,11 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 
-public class Adaptor extends FirestoreRecyclerAdapter<studentProfile,Adaptor.MyViewHolder> {
+public class Adaptor extends FirestoreRecyclerAdapter<StudentsProfile,Adaptor.MyViewHolder> {
     String[] names;
     String[] roll;
     boolean[] check;
@@ -30,7 +26,7 @@ public class Adaptor extends FirestoreRecyclerAdapter<studentProfile,Adaptor.MyV
      *
      * @param options
      */
-    public Adaptor(@NonNull FirestoreRecyclerOptions<studentProfile> options) {
+    public Adaptor(@NonNull FirestoreRecyclerOptions<StudentsProfile> options) {
         super(options);
 
 
@@ -86,7 +82,7 @@ public class Adaptor extends FirestoreRecyclerAdapter<studentProfile,Adaptor.MyV
     }
 */
     @Override
-    protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull studentProfile model) {
+    protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull StudentsProfile model) {
         holder.checkBox.setChecked(model.isCheck());
         holder.txt.setText(model.getFirstName()+" "+model.getLastName());
         holder.txt2.setText(model.getRollNo());
@@ -107,7 +103,7 @@ public class Adaptor extends FirestoreRecyclerAdapter<studentProfile,Adaptor.MyV
                 @Override
                 public void onClick(View v) {
                     int positon=getAdapterPosition();
-                    studentProfile s=getSnapshots().getSnapshot(positon).toObject(studentProfile.class);
+                    StudentsProfile s=getSnapshots().getSnapshot(positon).toObject(StudentsProfile.class);
                     if(s.isCheck())
                     {
                         getSnapshots().getSnapshot(positon).getReference().update("check",false);

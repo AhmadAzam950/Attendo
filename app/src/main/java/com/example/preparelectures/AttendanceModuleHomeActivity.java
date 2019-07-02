@@ -20,7 +20,7 @@ import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 
-public class homeActivity extends AppCompatActivity {
+public class AttendanceModuleHomeActivity extends AppCompatActivity {
     private Button btn;
     private Button btn1;
     FirebaseFirestore db;
@@ -69,7 +69,7 @@ public class homeActivity extends AppCompatActivity {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), Main2Activity.class);
+                Intent intent=new Intent(getApplicationContext(), BarCodeGenerateActivity.class);
                 intent.putExtra("lectureId",lectureId);
                 intent.putExtra("classId",classId);
                 startActivity(intent);
@@ -80,50 +80,54 @@ public class homeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressDialog.setMessage("Marking for you ;)");
                 progressDialog.show();
-                final ArrayList<studentProfile> list = new ArrayList<studentProfile>();
-                CollectionReference studentCollection = db.collection("tempdata").document(lectureId+classId).
-                        collection("studentsstate");
-                studentCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for (DocumentSnapshot documentSnapshot : task.getResult()) {
-                            studentProfile studentProfile = documentSnapshot.toObject(studentProfile.class);
-                            list.add(studentProfile);
-                        }
-                        DocumentReference ref;
-                        WriteBatch batch = db.batch();
-                        for (studentProfile studentProfile : list) {
-                            ref = db.collection("classes").document(classId).
-                                    collection("lectures").document(lectureId).collection("attendences").
+                submitAttendanceQuery();
+            }
+        });
+    }
+    void submitAttendanceQuery()
+    {
+        final ArrayList<StudentsProfile> list = new ArrayList<StudentsProfile>();
+        CollectionReference studentCollection = db.collection("tempdata").document(lectureId+classId).
+                collection("studentsstate");
+        studentCollection.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                    StudentsProfile studentProfile = documentSnapshot.toObject(StudentsProfile.class);
+                    list.add(studentProfile);
+                }
+                DocumentReference ref;
+                WriteBatch batch = db.batch();
+                for (StudentsProfile studentProfile : list) {
+                    ref = db.collection("classes").document(classId).
+                            collection("lectures").document(lectureId).collection("attendences").
                             document(studentProfile.getUid());
-                            attendence attendence=new attendence();
-                            attendence.setPresence(studentProfile.isCheck());
-                            batch.set(ref, attendence);
-                        }
-                        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    db.collection("classes").document(classId).collection("lectures")
-                                            .document(lectureId).update("marked",true).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful())
-                                            {
-                                                progressDialog.dismiss();
-                                                finish();
-                                                startActivity(new Intent(getApplicationContext(),TeacherMain.class));
-                                            }
-                                        }
-                                    });
-                                    //startActivity(intent);
+                    attendence attendence=new attendence();
+                    attendence.setPresence(studentProfile.isCheck());
+                    batch.set(ref, attendence);
+                }
+                batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            db.collection("classes").document(classId).collection("lectures")
+                                    .document(lectureId).update("marked",true).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful())
+                                    {
+                                        progressDialog.dismiss();
+                                        startActivity(new Intent(AttendanceModuleHomeActivity.this, TeacherFirstActivity.class));
+                                        finish();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 });
             }
         });
     }
-
 }
+
+

@@ -5,28 +5,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 
-public class coursesAdaptor extends FirestoreRecyclerAdapter<courses, coursesAdaptor.MyViewHolder> {
+public class CoursesAdaptor extends FirestoreRecyclerAdapter<courses, CoursesAdaptor.MyViewHolder> {
     String[] names;
     String[] roll;
     boolean[] check;
     FirebaseFirestore db;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
+private  OnItemClickListener listener;
     HashMap<String, String> map;
 
     /**
@@ -35,7 +30,7 @@ public class coursesAdaptor extends FirestoreRecyclerAdapter<courses, coursesAda
      *
      * @param options
      */
-    public coursesAdaptor(@NonNull FirestoreRecyclerOptions<courses> options) {
+    public CoursesAdaptor(@NonNull FirestoreRecyclerOptions<courses> options) {
         super(options);
         db = FirebaseFirestore.getInstance();
        /* map = new HashMap<String, String>();
@@ -119,21 +114,25 @@ public class coursesAdaptor extends FirestoreRecyclerAdapter<courses, coursesAda
     /*    String string = (String) map.get(model.getCourseId());
         holder.txt.setText(string);*/
     holder.txt.setText(getSnapshots().getSnapshot(position).getId());
+        holder.srNo.setText("No."+Integer.toString(position+1));
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView txt;
+        TextView srNo;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            srNo=(TextView)itemView.findViewById(R.id.srNo);
             txt = (TextView) itemView.findViewById(R.id.courseName);
-            txt.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int positon = getAdapterPosition();
-                    //  courses s = getSnapshots().getSnapshot(positon).toObject(courses.class);
-
+                  int position=getAdapterPosition();
+                  if(position!=RecyclerView.NO_POSITION&&listener!=null)
+                  {
+                      listener.onItemClick(getSnapshots().getSnapshot(position),position);
+                  }
                 }
             });
 
@@ -142,5 +141,13 @@ public class coursesAdaptor extends FirestoreRecyclerAdapter<courses, coursesAda
         {
             return txt;
         }
+    }
+    public interface OnItemClickListener{
+        void onItemClick(DocumentSnapshot documentSnapshot,int position);
+
+    }
+    public void setOnItemClickListener(OnItemClickListener listener)
+    {
+        this.listener=listener;
     }
 }

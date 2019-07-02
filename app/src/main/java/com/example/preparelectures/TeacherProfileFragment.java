@@ -13,23 +13,28 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-public class teacherprofieSegment extends Fragment
+public class TeacherProfileFragment extends Fragment
 {
     private TextView name;
     private TextView rollNo;
     private SharedPreferences sharedPreferences;
-    private teacherProfile profile;
+    private TeachersProfile profile;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.profile_segment, container, false);
         linkObjects(view);
-        sharedPreferences=getActivity().getSharedPreferences("Yo",Context.MODE_PRIVATE);
-        String json=sharedPreferences.getString("teacherProfile","");
-        profile=new Gson().fromJson(json,teacherProfile.class);
-        name.setText(profile.getFirstName()+" "+ profile.getLastName());
+        getTeacher();
+         name.setText(profile.getFirstName()+" "+ profile.getLastName());
         rollNo.setText(profile.getQualification());
         return view;
+    }
+    void getTeacher()
+    {
+        sharedPreferences=getActivity().getSharedPreferences("MyFile",Context.MODE_PRIVATE);
+        String json=sharedPreferences.getString("TeachersProfile","");
+        profile=new Gson().fromJson(json, TeachersProfile.class);
+
     }
     void linkObjects(View view) {
         name = (TextView) view.findViewById(R.id.profile_name);

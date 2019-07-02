@@ -49,7 +49,7 @@ public class homeSegment extends Fragment {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), Main2Activity.class));
+                startActivity(new Intent(getActivity(), BarCodeGenerateActivity.class));
             }
         });
     }

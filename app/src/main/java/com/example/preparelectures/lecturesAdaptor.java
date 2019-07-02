@@ -10,17 +10,16 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
 
 public class lecturesAdaptor extends FirestoreRecyclerAdapter<lectures, lecturesAdaptor.MyViewHolder> {
     String[] names;
     String[] roll;
+    private OnItemClickListener listener;
     boolean[] check;
     FirebaseFirestore db;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -118,19 +117,25 @@ public class lecturesAdaptor extends FirestoreRecyclerAdapter<lectures, lectures
         holder.txt.setText(string);*/
         String date = DateFormat.format("dd-MM-yyyy hh:mm:ss a",model.getTime().toDate()).toString();
         holder.txt.setText(date);
+        holder.srNo.setText("No."+Integer.toString(position+1));
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView txt;
+        TextView srNo;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            srNo=(TextView)itemView.findViewById(R.id.srNo);
             txt = (TextView) itemView.findViewById(R.id.courseName);
-            txt.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int positon = getAdapterPosition();
+                    int position = getAdapterPosition();
+                    if(position!=RecyclerView.NO_POSITION&&listener!=null)
+                    {
+                        listener.onItemClick(getSnapshots().getSnapshot(position),position);
+                    }
                     //  lectures s = getSnapshots().getSnapshot(positon).toObject(lectures.class);
 
                 }
@@ -141,5 +146,13 @@ public class lecturesAdaptor extends FirestoreRecyclerAdapter<lectures, lectures
         public TextView getTextView() {
             return txt;
         }
+    }
+    public interface OnItemClickListener{
+        void onItemClick(DocumentSnapshot documentSnapshot, int position);
+
+    }
+    public void setOnItemClickListener(OnItemClickListener listener)
+    {
+        this.listener=listener;
     }
 }

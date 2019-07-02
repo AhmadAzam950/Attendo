@@ -1,6 +1,6 @@
 package com.example.preparelectures;
 
-public class studentProfile {
+public class StudentsProfile {
     private String firstName;
     private String lastName;
     private String rollNo;
@@ -15,7 +15,7 @@ public class studentProfile {
 
     private String uid;
     private boolean check=false;
-    public studentProfile()
+    public StudentsProfile()
     {
 
     }
@@ -44,7 +44,7 @@ public class studentProfile {
         this.firstName = firstName;
     }
 
-    public studentProfile(String firstName, String lastName, String rollNo, boolean check,String uid) {
+    public StudentsProfile(String firstName, String lastName, String rollNo, boolean check, String uid) {
         this.firstName = firstName;
         this.lastName=lastName;
         this.rollNo=rollNo;
